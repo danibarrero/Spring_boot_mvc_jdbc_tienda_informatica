@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class FabricanteDAOImpl  implements FabricanteDAO{
+public class FabricanteDAOImpl implements FabricanteDAO{
 
 	 @Autowired
 	 private JdbcTemplate jdbcTemplate;
@@ -56,6 +56,7 @@ public class FabricanteDAOImpl  implements FabricanteDAO{
 		else return Optional.empty();
         
 	}
+
 	/**
 	 * Actualiza fabricante con campos del bean fabricante según ID del mismo.
 	 */

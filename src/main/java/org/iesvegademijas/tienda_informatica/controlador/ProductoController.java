@@ -1,6 +1,5 @@
 package org.iesvegademijas.tienda_informatica.controlador;
 
-import org.iesvegademijas.tienda_informatica.modelo.Fabricante;
 import org.iesvegademijas.tienda_informatica.modelo.Producto;
 import org.iesvegademijas.tienda_informatica.servicio.FabricanteService;
 import org.iesvegademijas.tienda_informatica.servicio.ProductoService;
@@ -20,6 +19,8 @@ public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
+
+    @Autowired
     private FabricanteService fabricanteService;
 
     @GetMapping("/productos")
@@ -33,7 +34,7 @@ public class ProductoController {
     public String detalle(Model model, @PathVariable Integer id) {
         Producto producto = productoService.one(id);
         model.addAttribute("producto", producto);
-        return "detalle-producto";
+        return "detalle-productos";
     }
 
     @GetMapping("/productos/crear")
@@ -41,11 +42,11 @@ public class ProductoController {
         Producto producto = new Producto();
         model.addAttribute("producto", producto);
         model.addAttribute("fabricante", fabricanteService.listAll());
-        return "crear-producto";
+        return "crear-productos";
     }
 
     @PostMapping("/productos/crear")
-    public RedirectView submitCrear(@ModelAttribute Producto producto) {
+    public RedirectView submitCrear(@ModelAttribute("Producto") Producto producto) {
         productoService.newProducto(producto);
         return new RedirectView("/productos");
     }

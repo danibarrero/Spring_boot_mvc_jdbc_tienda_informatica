@@ -21,12 +21,21 @@ public class ProductoDAOImpl implements ProductoDAO {
     @Override
     public void create(Producto producto) {
 
-        jdbcTemplate.update("INSERT INTO producto (nombre, precio, id_fabricante) VALUES (?)",
+        // Comprobar si existe el id_fabricante
+        String sqlCheck = "SELECT * FROM producto WHERE id_fabricante = ?";
+        Integer count = jdbcTemplate.queryForObject(sqlCheck, Integer.class, producto.getId_fabricante());
+
+        if (count == null || count == 0) {
+            throw new IllegalArgumentException("El fabricante con id " + producto.getId_fabricante() + " no tiene productos en la tabla producto.");
+        }
+
+        // Insertar el producto
+        String sqlInsert = "INSERT INTO producto (nombre, precio, id_fabricante) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sqlInsert,
                 producto.getNombre(),
                 producto.getPrecio(),
                 producto.getId_fabricante()
         );
-
     }
 
     /**

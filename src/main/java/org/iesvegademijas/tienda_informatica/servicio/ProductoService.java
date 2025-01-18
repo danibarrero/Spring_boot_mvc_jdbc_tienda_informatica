@@ -1,8 +1,6 @@
 package org.iesvegademijas.tienda_informatica.servicio;
 
-import org.iesvegademijas.tienda_informatica.dao.FabricanteDAO;
 import org.iesvegademijas.tienda_informatica.dao.ProductoDAO;
-import org.iesvegademijas.tienda_informatica.modelo.Fabricante;
 import org.iesvegademijas.tienda_informatica.modelo.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

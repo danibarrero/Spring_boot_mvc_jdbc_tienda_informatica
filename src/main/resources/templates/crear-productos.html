@@ -1,0 +1,39 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Producto</title>
+    <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+    <div class="container mx-auto px-4">
+        <form th:action="@{/productos/crear}" th:object="${producto}" method="post">
+            <div class="flex flex-row py-4 items-center border-b-2 p-2">
+                <div class="basis-1/2 text-4xl">
+                    <h1>Crear Producto</h1>
+                </div>
+                <div class="basis-1/2 flex justify-center">
+                    <!--RECUERDA: por defecto, button es type="submit",
+                    para controlar por js el envío usa type="button"-->
+                    <button class="btn btn-blue float-right">Guardar</button>
+                </div>
+            </div>
+
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" th:field="*{nombre}" />
+            </div>
+            <div>
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" th:field="*{precio}" />
+            </div>
+            <div>
+                <label for="idFabricante">Fabricante:</label>
+                <select id="idFabricante" th:field="*{id_fabricante}">
+                    <option th:each="fabricante : ${fabricantes}" th:value="${fabricante.codigo}" th:text="${fabricante.nombre}"></option>
+                </select>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

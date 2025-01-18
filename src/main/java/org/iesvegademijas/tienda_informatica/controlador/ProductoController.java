@@ -21,67 +21,47 @@ public class ProductoController {
 
     @GetMapping("/productos")
     public String listar(Model model) {
-
-        List<Producto> listAllPro =  productoService.listAll();
+        List<Producto> listAllPro = productoService.listAll();
         model.addAttribute("listarProductos", listAllPro);
-
         return "productos";
-
     }
 
     @GetMapping("/productos/{id}")
-    public String detalle(Model model, @PathVariable Integer id ) {
-
+    public String detalle(Model model, @PathVariable Integer id) {
         Producto producto = productoService.one(id);
         model.addAttribute("producto", producto);
-
         return "detalle-producto";
-
     }
 
     @GetMapping("/productos/crear")
     public String crear(Model model) {
-
         Producto producto = new Producto();
         model.addAttribute("producto", producto);
-
         return "crear-producto";
-
     }
 
     @PostMapping("/productos/crear")
     public RedirectView submitCrear(@ModelAttribute("producto") Producto producto) {
-
         productoService.newProducto(producto);
-
-        return new RedirectView("/productos") ;
-
+        return new RedirectView("/productos");
     }
 
     @GetMapping("/productos/editar/{id}")
     public String editar(Model model, @PathVariable Integer id) {
-
         Producto producto = productoService.one(id);
-        model.addAttribute("productos", producto);
-
+        model.addAttribute("producto", producto);
         return "editar-producto";
-
     }
 
     @PostMapping("/productos/editar/{id}")
     public RedirectView submitEditar(@ModelAttribute("producto") Producto producto) {
-
         productoService.replaceProducto(producto);
-
         return new RedirectView("/productos");
     }
 
     @PostMapping("/productos/borrar/{id}")
     public RedirectView submitBorrar(@PathVariable Integer id) {
-
         productoService.deleteProducto(id);
-
         return new RedirectView("/productos");
     }
-
 }

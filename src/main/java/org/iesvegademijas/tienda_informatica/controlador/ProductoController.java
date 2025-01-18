@@ -1,6 +1,8 @@
 package org.iesvegademijas.tienda_informatica.controlador;
 
+import org.iesvegademijas.tienda_informatica.modelo.Fabricante;
 import org.iesvegademijas.tienda_informatica.modelo.Producto;
+import org.iesvegademijas.tienda_informatica.servicio.FabricanteService;
 import org.iesvegademijas.tienda_informatica.servicio.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
+    private FabricanteService fabricanteService;
 
     @GetMapping("/productos")
     public String listar(Model model) {
@@ -37,6 +40,7 @@ public class ProductoController {
     public String crear(Model model) {
         Producto producto = new Producto();
         model.addAttribute("producto", producto);
+        model.addAttribute("fabricante", fabricanteService.listAll());
         return "crear-producto";
     }
 

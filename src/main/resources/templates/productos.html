@@ -31,16 +31,22 @@
         <div class="basis-1/2" th:text="${producto.id_fabricante}">id_fabricante</div>
 
         <div class="flex justify-center">
-            <form>
-                <button class="mx-0.5 w-8 btn btn-green">Ver Detalle</button>
+            <!-- Ver Detalle -->
+            <form th:action="@{/productos/{codigo}(codigo=${producto.codigo})}">
+                <button class="mx-0.5 btn btn-green">Ver Detalle</button>
             </form>
-            <form>
-                <button class=" mx-0.5 btn btn-blue">Editar</button>
+
+            <!-- Editar Producto -->
+            <form th:action="@{/productos/editar/{codigo}(codigo=${producto.codigo})}">
+                <button class="mx-0.5 btn btn-blue">Editar</button>
             </form>
-            <form>
+
+            <!-- Eliminar Producto -->
+            <form th:action="@{/productos/borrar/{codigo}(codigo=${producto.codigo})}" method="post">
                 <button class="mx-0.5 btn btn-red">Eliminar</button>
             </form>
         </div>
+
     </div>
 </div>
 </body>

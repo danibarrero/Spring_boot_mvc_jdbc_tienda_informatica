@@ -15,28 +15,25 @@ public class ProductoDAOImpl implements ProductoDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    FabricanteDAOImpl fabricanteDAO;
+
     /**
      * Inserta en base de datos el nuevo producto, actualizando el id en el bean producto.
      */
     @Override
     public void create(Producto producto) {
+        Optional<Fabricante> optionalFab = fabricanteDAO.find(producto.getId_fabricante());
 
-        // Comprobar si existe el id_fabricante
-        String sqlCheck = "SELECT * FROM producto WHERE id_fabricante = ?";
-        Integer count = jdbcTemplate.queryForObject(sqlCheck, Integer.class, producto.getId_fabricante());
 
-        if (count == null || count == 0) {
-            throw new IllegalArgumentException("El fabricante con id " + producto.getId_fabricante() + " no tiene productos en la tabla producto.");
+        if (optionalFab.isPresent()) {
+            jdbcTemplate.update("INSERT INTO producto (nombre, precio, id_fabricante) VALUES (? ,? ,?)",
+                    producto.getNombre(), producto.getPrecio(), producto.getId_fabricante());
+        } else {
+            throw new RuntimeException("El fabricante con ID " + producto.getId_fabricante() + " no existe.");
         }
-
-        // Insertar el producto
-        String sqlInsert = "INSERT INTO producto (nombre, precio, id_fabricante) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sqlInsert,
-                producto.getNombre(),
-                producto.getPrecio(),
-                producto.getId_fabricante()
-        );
     }
+
 
     /**
      * Devuelve lista con todos loa productos.
@@ -84,7 +81,7 @@ public class ProductoDAOImpl implements ProductoDAO {
     @Override
     public void update(Producto producto) {
 
-        int rows = jdbcTemplate.update("UPDATE prodcuto SET nombre = ?  WHERE codigo = ?",
+        int rows = jdbcTemplate.update("UPDATE prodcuto SET nombre = ?, precio = ?, id_fabricante = ? WHERE codigo = ?",
                 producto.getNombre(),
                 producto.getPrecio(),
                 producto.getId_fabricante(),

@@ -46,7 +46,7 @@ public class ProductoController {
     }
 
     @PostMapping("/productos/crear")
-    public RedirectView submitCrear(@ModelAttribute("Producto") Producto producto) {
+    public RedirectView submitCrear(@ModelAttribute Producto producto) {
         productoService.newProducto(producto);
         return new RedirectView("/productos");
     }
@@ -55,7 +55,7 @@ public class ProductoController {
     public String editar(Model model, @PathVariable Integer id) {
         Producto producto = productoService.one(id);
         model.addAttribute("producto", producto);
-        return "editar-producto";
+        return "editar-productos";
     }
 
     @PostMapping("/productos/editar/{id}")

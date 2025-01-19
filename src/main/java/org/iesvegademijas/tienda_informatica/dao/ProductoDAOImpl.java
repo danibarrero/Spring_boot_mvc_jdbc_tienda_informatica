@@ -78,18 +78,15 @@ public class ProductoDAOImpl implements ProductoDAO {
     /**
      * Actualiza producto con campos del bean producto según ID del mismo.
      */
-    @Override
     public void update(Producto producto) {
+        String sql = "UPDATE producto SET nombre = ?, precio = ? WHERE codigo = ?";
+        int rows = jdbcTemplate.update(sql, producto.getNombre(),
+                                            producto.getPrecio(),
+                                            producto.getCodigo());
 
-        int rows = jdbcTemplate.update("UPDATE prodcuto SET nombre = ?, precio = ?, id_fabricante = ? WHERE codigo = ?",
-                producto.getNombre(),
-                producto.getPrecio(),
-                producto.getId_fabricante(),
-                producto.getCodigo()
-        );
-
-        if (rows == 0) System.out.println("Update de producto con 0 registros actualizados.");
-
+        if (rows == 0) {
+            throw new RuntimeException("No se encontró el producto con código " + producto.getCodigo() + " para actualizar.");
+        }
     }
 
     /**

@@ -48,7 +48,7 @@ public class FabricanteDAOImpl implements FabricanteDAO{
 		
 		Fabricante fab =  jdbcTemplate
 				.queryForObject("SELECT * FROM fabricante WHERE codigo = ?"														
-								, (rs, rowNum) -> new Fabricante(rs.getInt("codigo"),rs.getString("nombre"))  
+							, (rs, rowNum) -> new Fabricante(rs.getInt("codigo"),rs.getString("nombre"))
 								, id
 								);
 		

@@ -10,7 +10,7 @@
     <form th:action="@{/productos/crear/}" th:object="${producto}" method="post">
         <div class="flex flex-row py-4 items-center border-b-2 p-2">
             <div class="basis-1/2 text-4xl">
-                <h1>Crear Fabricante</h1>
+                <h1>Crear Producto</h1>
             </div>
             <div class="basis-1/2 flex justify-center">
                 <button class="btn btn-blue float-right">Guardar</button>
@@ -33,14 +33,19 @@
             </div>
         </div>
 
-        <div>
-            <label for="idFabricante">Fabricante</label>
-            <select id="idFabricante" th:field="*{id_fabricante}">
-                <option th:each="fabricante : ${fabricante}"
-                        th:value="${fabricante.codigo}"
-                        th:text="${fabricante.nombre}">
-                </option>
-            </select>
+        <div class="flex flex-row my-0.5">
+            <div class="basis-1/2">
+                <label>Fabricante:</label>
+            </div>
+
+            <div class="basis-1/2">
+                <select th:field="*{id_fabricante}">
+                    <option th:each="fab : ${fabricantes}"
+                            th:value="${fab.codigo}"
+                            th:text="${fab.nombre}">
+                    </option>
+                </select>
+            </div>
         </div>
     </form>
 </div>

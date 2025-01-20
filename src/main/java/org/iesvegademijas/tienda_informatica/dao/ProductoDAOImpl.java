@@ -23,16 +23,17 @@ public class ProductoDAOImpl implements ProductoDAO {
      */
     @Override
     public void create(Producto producto) {
-        Optional<Fabricante> optionalFab = fabricanteDAO.find(producto.getFabricante().getCodigo());
+        Optional<Fabricante> optionalFab = fabricanteDAO.find(producto.getId_fabricante());
 
         if (optionalFab.isPresent()) {
             jdbcTemplate.update("INSERT INTO producto (nombre, precio, id_fabricante) VALUES (? ,? ,?)",
-                    producto.getNombre(), producto.getPrecio(), producto.getFabricante().getCodigo());
+                    producto.getNombre(),
+                    producto.getPrecio(),
+                    producto.getId_fabricante());
         } else {
-            throw new RuntimeException("El fabricante con ID " + producto.getFabricante().getCodigo() + " no existe.");
+            throw new RuntimeException("El fabricante con ID " + producto.getId_fabricante() + " no existe.");
         }
     }
-
 
     /**
      * Devuelve lista con todos loa productos.
@@ -41,11 +42,11 @@ public class ProductoDAOImpl implements ProductoDAO {
     public List<Producto> getAll() {
 
         List<Producto> listPro = jdbcTemplate.query(
-                "SELECT * FROM producto as p INNER JOIN fabricante as f on p.id_fabricante = f.codigo",
-                (rs, rowNum) -> new Producto(rs.getInt("p.codigo")
-                                            ,rs.getString("p.nombre")
-                                            ,rs.getDouble("p.precio")
-                                            ,new Fabricante(rs.getInt("f.codigo"), rs.getString("f.nombre")))
+                "SELECT * FROM producto",
+                (rs, rowNum) -> new Producto(rs.getInt("codigo")
+                                            ,rs.getString("nombre")
+                                            ,rs.getDouble("precio")
+                                            ,rs.getInt("id_fabricante"))
         );
 
         return listPro;
@@ -59,11 +60,11 @@ public class ProductoDAOImpl implements ProductoDAO {
     public Optional<Producto> find(int id) {
 
         Producto p = jdbcTemplate.queryForObject(
-                "SELECT * FROM producto as p INNER JOIN fabricante as f on p.id_fabricante = f.codigo WHERE p.codigo = ?",
-                (rs, rowNum) -> new Producto(rs.getInt("p.codigo")
-                        ,rs.getString("p.nombre")
-                        ,rs.getDouble("p.precio")
-                        ,new Fabricante(rs.getInt("f.codigo"), rs.getString("f.nombre"))
+                "SELECT * FROM producto WHERE codigo = ?",
+                (rs, rowNum) -> new Producto(rs.getInt("codigo")
+                                            ,rs.getString("nombre")
+                                            ,rs.getDouble("precio")
+                                            ,rs.getInt("id_fabricante")
                 ), id
         );
 
@@ -80,7 +81,7 @@ public class ProductoDAOImpl implements ProductoDAO {
         int rows = jdbcTemplate.update(sql, producto.getNombre(),
                                             producto.getPrecio(),
                                             producto.getCodigo(),
-                                            producto.getFabricante().getCodigo());
+                                            producto.getId_fabricante());
 
         if (rows == 0) {
             throw new RuntimeException("No se encontró el producto con código " + producto.getCodigo() + " para actualizar.");

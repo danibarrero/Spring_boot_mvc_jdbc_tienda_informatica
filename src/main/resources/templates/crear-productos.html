@@ -33,12 +33,17 @@
             </div>
         </div>
 
-        <div class="flex flex-row my-0.5">
-            <div class="basis-1/2">Fabricante</div>
-            <div class="basis-1/2">
-                <input class="shadow appearance-none border rounded w-1/2 py-2 px-5 text-gray-700 leading-tight"
-                       th:field="*{id_fabricante}" />
-            </div>
+        <div>
+            <label for="idFabricante">Fabricante:</label>
+            <select id="idFabricante" th:field="*{id_fabricante}">
+
+                <option th:each="fabricante : ${fabricante}"
+
+                        th:value="${fabricante.codigo}"
+                        th:text="${fabricante.nombre}">
+
+                </option>
+            </select>
         </div>
     </form>
 </div>

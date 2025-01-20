@@ -29,7 +29,7 @@
 			<form th:action="@{/fabricantes/__${fabricante.codigo}__}">
 				<button class="mx-0.5 btn btn-green">Ver Detalle</button>
 			</form>
-			<form  th:action="@{/fabricantes/editar/}+${fabricante.codigo}">
+			<form th:action="@{/fabricantes/editar/__${fabricante.codigo}__}">
 				<button class="mx-0.5 btn btn-blue">Editar</button>
 			</form>
 			<form th:action="@{/fabricantes/borrar/__${fabricante.codigo}__}" method="post">

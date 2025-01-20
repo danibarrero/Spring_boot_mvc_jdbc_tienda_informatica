@@ -72,8 +72,7 @@ public class FabricanteController {
 		return "editar-fabricante";
 		
 	}
-	
-	
+
 	@PostMapping("/fabricantes/editar/{id}")
 	public RedirectView submitEditar(@ModelAttribute("fabricante") Fabricante fabricante) {
 		

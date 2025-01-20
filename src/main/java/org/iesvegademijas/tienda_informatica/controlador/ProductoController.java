@@ -43,10 +43,8 @@ public class ProductoController {
 
         Producto producto = new Producto();
         List<Fabricante> fabricantes = fabricanteService.listAll();
-
         model.addAttribute("producto", producto);
         model.addAttribute("fabricantes", fabricantes);
-
         return "crear-productos";
     }
 
@@ -64,6 +62,7 @@ public class ProductoController {
         Producto producto = productoService.one(id);
         model.addAttribute("fabricantes", fabricanteService.listAll());
         model.addAttribute("producto", producto);
+        model.addAttribute("fabricantes", fabricanteService.listAll());
         return "editar-productos";
     }
 

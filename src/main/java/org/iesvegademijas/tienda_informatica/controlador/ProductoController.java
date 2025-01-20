@@ -1,5 +1,6 @@
 package org.iesvegademijas.tienda_informatica.controlador;
 
+import org.iesvegademijas.tienda_informatica.modelo.Fabricante;
 import org.iesvegademijas.tienda_informatica.modelo.Producto;
 import org.iesvegademijas.tienda_informatica.servicio.FabricanteService;
 import org.iesvegademijas.tienda_informatica.servicio.ProductoService;
@@ -38,22 +39,28 @@ public class ProductoController {
     }
 
     @GetMapping("/productos/crear")
-    public String crear(Model model) {
+    public String crear (Model model) {
+
         Producto producto = new Producto();
+        List<Fabricante> fabricantes = fabricanteService.listAll();
         model.addAttribute("producto", producto);
-        model.addAttribute("fabricantes", fabricanteService.listAll());
+        model.addAttribute("fabricantes", fabricantes);
         return "crear-productos";
     }
 
     @PostMapping("/productos/crear")
-    public RedirectView submitCrear(@ModelAttribute("producto") Producto producto) {
+    public RedirectView submitCrear(@ModelAttribute("productos") Producto producto) {
+
         productoService.newProducto(producto);
-        return new RedirectView("/productos");
+
+        return new RedirectView("/productos") ;
+
     }
 
     @GetMapping("/productos/editar/{id}")
     public String editar(Model model, @PathVariable Integer id) {
         Producto producto = productoService.one(id);
+        model.addAttribute("fabricantes", fabricanteService.listAll());
         model.addAttribute("producto", producto);
         model.addAttribute("fabricantes", fabricanteService.listAll());
         return "editar-productos";

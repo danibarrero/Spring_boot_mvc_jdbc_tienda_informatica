@@ -25,15 +25,15 @@ public class ProductoDAOImpl implements ProductoDAO {
     public void create(Producto producto) {
         Optional<Fabricante> optionalFab = fabricanteDAO.find(producto.getId_fabricante());
 
-
         if (optionalFab.isPresent()) {
             jdbcTemplate.update("INSERT INTO producto (nombre, precio, id_fabricante) VALUES (? ,? ,?)",
-                    producto.getNombre(), producto.getPrecio(), producto.getId_fabricante());
+                    producto.getNombre(),
+                    producto.getPrecio(),
+                    producto.getId_fabricante());
         } else {
             throw new RuntimeException("El fabricante con ID " + producto.getId_fabricante() + " no existe.");
         }
     }
-
 
     /**
      * Devuelve lista con todos loa productos.
@@ -61,13 +61,11 @@ public class ProductoDAOImpl implements ProductoDAO {
 
         Producto p = jdbcTemplate.queryForObject(
                 "SELECT * FROM producto WHERE codigo = ?",
-                (rs, rowNum) -> new Producto(
-                        rs.getInt("codigo"),
-                        rs.getString("nombre"),
-                        rs.getDouble("precio"),
-                        rs.getInt("id_fabricante")
-                ),
-                id
+                (rs, rowNum) -> new Producto(rs.getInt("codigo")
+                                            ,rs.getString("nombre")
+                                            ,rs.getDouble("precio")
+                                            ,rs.getInt("id_fabricante")
+                ), id
         );
 
         if (p != null) return Optional.of(p);
@@ -79,10 +77,11 @@ public class ProductoDAOImpl implements ProductoDAO {
      * Actualiza producto con campos del bean producto según ID del mismo.
      */
     public void update(Producto producto) {
-        String sql = "UPDATE producto SET nombre = ?, precio = ? WHERE codigo = ?";
+        String sql = "UPDATE producto SET nombre = ?, precio = ?, id_fabricante = ? WHERE codigo = ?";
         int rows = jdbcTemplate.update(sql, producto.getNombre(),
                                             producto.getPrecio(),
-                                            producto.getCodigo());
+                                            producto.getCodigo(),
+                                            producto.getId_fabricante());
 
         if (rows == 0) {
             throw new RuntimeException("No se encontró el producto con código " + producto.getCodigo() + " para actualizar.");

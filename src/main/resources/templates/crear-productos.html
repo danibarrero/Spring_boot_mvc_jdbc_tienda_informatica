@@ -33,17 +33,19 @@
             </div>
         </div>
 
-        <div>
-            <label for="idFabricante">Fabricante:</label>
-            <select id="idFabricante" th:field="*{id_fabricante}">
+        <div class="flex flex-row my-0.5">
+            <div class="basis-1/2">
+                <label for="idFabricante">Fabricante</label>
+            </div>
+            <div class="basis-1/2">
+                <select id="idFabricante" th:field="*{id_fabricante}">
+                    <option th:each="fab : ${fabricantes}"
+                            th:value="${fab.codigo}"
+                            th:text="${fab.nombre}">
+                    </option>
+                </select>
+            </div>
 
-                <option th:each="fabricante : ${fabricante}"
-
-                        th:value="${fabricante.codigo}"
-                        th:text="${fabricante.nombre}">
-
-                </option>
-            </select>
         </div>
     </form>
 </div>

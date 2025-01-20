@@ -41,7 +41,7 @@ public class ProductoController {
     public String crear(Model model) {
         Producto producto = new Producto();
         model.addAttribute("producto", producto);
-        model.addAttribute("fabricante", fabricanteService.listAll());
+        model.addAttribute("fabricantes", fabricanteService.listAll());
         return "crear-productos";
     }
 
@@ -55,6 +55,7 @@ public class ProductoController {
     public String editar(Model model, @PathVariable Integer id) {
         Producto producto = productoService.one(id);
         model.addAttribute("producto", producto);
+        model.addAttribute("fabricantes", fabricanteService.listAll());
         return "editar-productos";
     }
 

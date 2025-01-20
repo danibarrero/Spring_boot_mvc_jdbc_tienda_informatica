@@ -14,7 +14,6 @@ public class Producto {
     private int codigo;
     private String nombre;
     private Double precio;
-    //private Fabricante fabricante;
     private int id_fabricante;
 
 }

@@ -80,8 +80,8 @@ public class ProductoDAOImpl implements ProductoDAO {
         String sql = "UPDATE producto SET nombre = ?, precio = ?, id_fabricante = ? WHERE codigo = ?";
         int rows = jdbcTemplate.update(sql, producto.getNombre(),
                                             producto.getPrecio(),
-                                            producto.getCodigo(),
-                                            producto.getId_fabricante());
+                                            producto.getId_fabricante(),
+                                            producto.getCodigo());
 
         if (rows == 0) {
             throw new RuntimeException("No se encontró el producto con código " + producto.getCodigo() + " para actualizar.");

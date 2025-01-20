@@ -34,14 +34,11 @@
         </div>
 
         <div>
-            <label for="idFabricante">Fabricante:</label>
+            <label for="idFabricante">Fabricante</label>
             <select id="idFabricante" th:field="*{id_fabricante}">
-
                 <option th:each="fabricante : ${fabricante}"
-
                         th:value="${fabricante.codigo}"
                         th:text="${fabricante.nombre}">
-
                 </option>
             </select>
         </div>

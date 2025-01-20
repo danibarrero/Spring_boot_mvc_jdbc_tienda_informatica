@@ -28,7 +28,7 @@
         <div class="basis-1/2" th:text="${producto.codigo}">Código</div>
         <div class="basis-1/2" th:text="${producto.nombre}">Nombre</div>
         <div class="basis-1/2" th:text="${producto.precio}">Precio</div>
-        <div class="basis-1/2" th:text="${producto.id_fabricante}">id_fabricante</div>
+        <div class="basis-1/2" th:text="${producto.fabricante.getNombre()}">id_fabricante</div>
 
         <div class="flex justify-center">
             <!-- Ver Detalle -->

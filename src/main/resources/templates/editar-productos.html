@@ -40,6 +40,16 @@
                        th:field="*{precio}" />
             </div>
         </div>
+
+        <div class="basis-1/2">
+            <label>Fabricante:</label>
+            <select th:field="*{fabricante.codigo}">
+                <option th:each="fab : ${fabricantes}"
+                        th:value="${fab.codigo}"
+                        th:text="${fab.nombre}">
+                </option>
+            </select>
+        </div>
     </form>
 </div>
 </body>
